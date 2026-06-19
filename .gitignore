@@ -1,5 +1,6 @@
 .env
 .env.*
+DEPLOY.md
 
 # Python cache
 __pycache__/

@@ -70,6 +70,7 @@ portfolio/
 ├─ requirements.txt
 ├─ PROJECT_CONTEXT.md
 ├─ ARCHITECTURE.md
+├─ DEPLOY.md
 └─ README.md
 ```
 
@@ -204,6 +205,46 @@ python -m uvicorn app.main:app --reload
 - `http://127.0.0.1:8000/projects`
 - `http://127.0.0.1:8000/admin`
 
+## Запуск через Docker Compose
+
+Для серверного или production-like запуска проект можно поднимать через `docker compose`.
+
+### 1. Создать `.env`
+
+Пример:
+
+```env
+DATABASE_URL=sqlite:////srv/portfolio/data/portfolio.db
+ADMIN_PASSWORD=change-this-password
+SECRET_KEY=change-this-secret-key
+```
+
+### 2. Поднять контейнер
+
+```bash
+docker compose up -d --build
+```
+
+### 3. Проверить контейнер
+
+```bash
+docker ps
+docker logs portfolio_web --tail 50
+```
+
+### 4. Где будут храниться данные
+
+`docker-compose.yml` монтирует два каталога:
+
+- `./data` -> `/srv/portfolio/data`
+- `./uploads` -> `/srv/portfolio/app/static/uploads`
+
+Это значит, что:
+
+- база SQLite хранится на хосте;
+- загруженные фото и изображения проектов тоже хранятся на хосте;
+- пересборка контейнера не удаляет контент.
+
 ## Что поменять на свои данные
 
 После клонирования репозитория настрой проект под себя в таком порядке:
@@ -273,7 +314,6 @@ python -m uvicorn app.main:app --reload
 
 ## Что можно развивать дальше
 
-- загрузка изображений через форму, а не ручной `image_path`;
 - отдельное редактирование фото профиля;
 - валидация slug и URL;
 - более строгие сообщения об ошибках в формах;
