@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Вход в админку{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">Вход в админку</h1>
+        <p class="hero__lead">Доступ только для владельца сайта.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="info-card" style="max-width: 420px;">
+            <form method="post" action="/admin/login">
+                <label for="password"><strong>Пароль</strong></label>
+                <div style="margin-top: 0.75rem;">
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        required
+                        style="width: 100%; padding: 0.8rem; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 10px;"
+                    >
+                </div>
+
+                {% if error %}
+                    <p style="color: #dc2626; margin-top: 0.75rem;">{{ error }}</p>
+                {% endif %}
+
+                <div class="actions-row">
+                    <button class="button button--primary" type="submit">Войти</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

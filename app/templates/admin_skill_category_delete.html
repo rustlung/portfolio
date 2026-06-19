@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление категории навыков{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">Удаление категории навыков</h1>
+        <p class="hero__lead">Подтверди удаление категории и связанных с ней навыков.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="info-card admin-form-card">
+            <h2 class="info-card__title">{{ category.name }}</h2>
+            <p class="stack-text"><strong>Порядок:</strong> {{ category.sort_order }}</p>
+
+            {% if category.skills %}
+                <div style="margin-top: 1rem;">
+                    <p class="stack-text"><strong>Будут удалены и навыки:</strong></p>
+                    <ul class="skill-list">
+                        {% for skill in category.skills | sort(attribute="sort_order") %}
+                            <li>{{ skill.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <p class="info-card__text" style="margin-top: 1rem;">
+                Это действие удалит категорию из базы данных. Если в категории есть навыки,
+                они тоже будут удалены.
+            </p>
+
+            <form method="post" action="/admin/skills/categories/{{ category.id }}/delete">
+                <div class="actions-row">
+                    <button class="button button--primary" type="submit">Удалить</button>
+                    <a class="button button--secondary" href="/admin/skills">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

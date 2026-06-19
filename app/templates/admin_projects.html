@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Проекты | Админка{% endblock %}
+
+{% block content %}
+    <!-- Admin list for all projects; this is the main control screen for portfolio cases. -->
+    <section class="page-section hero">
+        <h1 class="hero__title">Проекты</h1>
+        <p class="hero__lead">Управление карточками проектов, описаниями, ссылками и отображением на сайте.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="actions-row">
+            <a class="button button--primary" href="/admin/projects/create">Добавить проект</a>
+            <a class="button button--secondary" href="/admin">Назад</a>
+        </div>
+    </section>
+
+    <section class="page-section">
+        {% if projects %}
+            <!-- Cards show the same core data the public pages rely on, plus admin actions. -->
+            <div class="card-grid">
+                {% for project in projects %}
+                    <article class="info-card">
+                        {% if project.image_path %}
+                            <div class="project-preview">
+                                <img class="project-preview__image" src="{{ project.image_path }}" alt="{{ project.title }}">
+                            </div>
+                        {% else %}
+                            <div class="project-preview project-preview--empty">
+                                <span>Preview coming soon</span>
+                            </div>
+                        {% endif %}
+
+                        <h2 class="info-card__title">{{ project.title }}</h2>
+                        <p class="info-card__text">{{ project.short_description }}</p>
+
+                        <p class="stack-text"><strong>Slug:</strong> {{ project.slug }}</p>
+                        <p class="stack-text"><strong>Технологии:</strong> {{ project.technologies }}</p>
+                        <p class="stack-text"><strong>Избранный:</strong> {{ "Да" if project.is_featured else "Нет" }}</p>
+
+                        <div class="actions-row">
+                            <a class="button button--secondary" href="/projects/{{ project.slug }}">Открыть</a>
+                            <a class="button button--secondary" href="/admin/projects/{{ project.id }}/edit">Редактировать</a>
+                            <a class="button button--secondary" href="/admin/projects/{{ project.id }}/delete">Удалить</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p class="info-card__text">Проекты пока не добавлены.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

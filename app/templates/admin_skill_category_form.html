@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">{{ form_title }}</h1>
+        <p class="hero__lead">Категории определяют структуру блока навыков на главной странице.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="admin-form-layout">
+            <div class="info-card admin-form-card">
+                <form class="admin-form" method="post" action="{{ form_action }}">
+                    <div class="admin-form__grid">
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="name">Название категории</label>
+                            <input
+                                class="admin-form__input"
+                                id="name"
+                                name="name"
+                                type="text"
+                                value="{{ category.name if category else '' }}"
+                                placeholder="Backend"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="sort_order">Порядок</label>
+                            <input
+                                class="admin-form__input"
+                                id="sort_order"
+                                name="sort_order"
+                                type="number"
+                                value="{{ category.sort_order if category else 0 }}"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="actions-row">
+                        <button class="button button--primary" type="submit">{{ submit_label }}</button>
+                        <a class="button button--secondary" href="/admin/skills">Отмена</a>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="info-card admin-note">
+                <h2 class="info-card__title">Подсказка</h2>
+                <p class="info-card__text">
+                    Категория — это группа навыков, например `Backend`, `AI`, `Infrastructure`.
+                </p>
+                <p class="info-card__text">
+                    `sort_order` определяет порядок отображения категории на главной странице.
+                </p>
+            </aside>
+        </div>
+    </section>
+{% endblock %}

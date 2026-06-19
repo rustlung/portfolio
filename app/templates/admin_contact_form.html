@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">{{ form_title }}</h1>
+        <p class="hero__lead">Настройка контактов для отображения на главной странице.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="admin-form-layout">
+            <div class="info-card admin-form-card">
+                <form class="admin-form" method="post" action="{{ form_action }}">
+                    <div class="admin-form__grid">
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="type">Тип</label>
+                            <input
+                                class="admin-form__input"
+                                id="type"
+                                name="type"
+                                type="text"
+                                value="{{ contact.type if contact else '' }}"
+                                placeholder="email / telegram / github / linkedin"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="label">Название</label>
+                            <input
+                                class="admin-form__input"
+                                id="label"
+                                name="label"
+                                type="text"
+                                value="{{ contact.label if contact else '' }}"
+                                placeholder="Email"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="value">Значение</label>
+                            <input
+                                class="admin-form__input"
+                                id="value"
+                                name="value"
+                                type="text"
+                                value="{{ contact.value if contact else '' }}"
+                                placeholder="v.i.sigaev@gmail.com"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="sort_order">Порядок</label>
+                            <input
+                                class="admin-form__input"
+                                id="sort_order"
+                                name="sort_order"
+                                type="number"
+                                value="{{ contact.sort_order if contact else 0 }}"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="url">Ссылка</label>
+                        <input
+                            class="admin-form__input"
+                            id="url"
+                            name="url"
+                            type="text"
+                            value="{{ contact.url if contact else '' }}"
+                            placeholder="mailto:v.i.sigaev@gmail.com"
+                            required
+                        >
+                    </div>
+
+                    <div class="actions-row">
+                        <button class="button button--primary" type="submit">{{ submit_label }}</button>
+                        <a class="button button--secondary" href="/admin/contacts">Отмена</a>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="info-card admin-note">
+                <h2 class="info-card__title">Подсказка</h2>
+                <p class="info-card__text">
+                    Для email используй `mailto:...`, для Telegram — полную ссылку вида `https://t.me/...`.
+                </p>
+                <p class="info-card__text">
+                    `sort_order` определяет порядок отображения контактов на главной странице.
+                </p>
+            </aside>
+        </div>
+    </section>
+{% endblock %}

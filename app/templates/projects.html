@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Все проекты - Portfolio{% endblock %}
+
+{% block content %}
+    <!-- Intro block for the full project catalogue. -->
+    <section class="page-section hero">
+        <h1 class="hero__title">Все проекты</h1>
+        <p class="hero__lead">Подборка реализованных backend- и AI-проектов.</p>
+    </section>
+
+    <section class="page-section">
+        {% if projects %}
+            <!-- Each card is a compact entry point into the detailed case page. -->
+            <div class="card-grid">
+                {% for project in projects %}
+                    <article class="info-card">
+                        {% if project.image_path %}
+                            <div class="project-preview">
+                                <img class="project-preview__image" src="{{ project.image_path }}" alt="{{ project.title }}">
+                            </div>
+                        {% else %}
+                            <div class="project-preview project-preview--empty">
+                                <span>Preview coming soon</span>
+                            </div>
+                        {% endif %}
+                        
+                        <h2 class="info-card__title">
+                            <a class="project-link" href="/projects/{{ project.slug }}">{{ project.title }}</a>
+                        </h2>
+                        <p class="info-card__text">{{ project.short_description }}</p>
+                        <p class="stack-text"><strong>Технологии:</strong> {{ project.technologies }}</p>
+                    
+                        <div class="actions-row">
+                            <a class="button button--secondary" href="/projects/{{ project.slug }}">Подробнее</a>
+                            {% if project.github_url %}
+                                <a class="button button--secondary" href="{{ project.github_url }}">GitHub</a>
+                            {% endif %}
+                        </div>
+                    </article>                    
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty-state is unlikely in production, but useful for a fresh admin setup. -->
+            <div class="empty-state">
+                <p class="info-card__text">Проекты пока не добавлены.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

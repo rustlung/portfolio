@@ -1,0 +1,526 @@
+/* Design tokens: colors, spacing rhythm, radii and container width. */
+:root {
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --surface-soft: rgba(255, 255, 255, 0.72);
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: rgba(15, 23, 42, 0.08);
+    --shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
+    --radius: 14px;
+    --radius-sm: 10px;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --container: 1100px;
+}
+
+/* Global reset and default text rendering. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font);
+    color: var(--text);
+    background:
+        radial-gradient(1000px 600px at 15% -10%, rgba(37, 99, 235, 0.08), transparent 50%),
+        radial-gradient(800px 500px at 95% 10%, rgba(22, 163, 74, 0.06), transparent 45%),
+        var(--bg);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Shared page shell: header, content container and footer. */
+.site-shell {
+    width: min(var(--container), calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-soft);
+    backdrop-filter: blur(10px);
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.site-logo {
+    color: var(--text);
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.site-logo:hover {
+    text-decoration: none;
+    opacity: 0.85;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.site-nav a {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+.site-nav a:hover {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.site-main {
+    padding: 2.5rem 0 3rem;
+}
+
+.site-footer {
+    padding: 1.5rem 0 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.page-section + .page-section {
+    margin-top: 2rem;
+}
+
+/* Hero patterns for public and admin top sections. */
+.hero {
+    padding: 2rem 0 1rem;
+}
+
+.hero--split {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+}
+
+.hero__content {
+    min-width: 0;
+}
+
+.hero__media {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-photo {
+    width: min(100%, 360px);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    background: var(--surface);
+}
+
+.profile-photo__image {
+    width: 100%;
+    display: block;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+}
+
+.hero__title {
+    margin: 0 0 0.75rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.hero__subtitle {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.hero__lead {
+    max-width: 46rem;
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.0625rem;
+}
+
+.section-title {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+}
+
+/* Generic content building blocks: grids, cards and utility text styles. */
+.card-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.card-grid--three {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.info-card__title {
+    margin: 0 0 0.75rem;
+    font-size: 1.05rem;
+    line-height: 1.3;
+}
+
+.info-card__text {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.meta-list {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.meta-list strong {
+    color: var(--text);
+}
+
+.skill-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--muted);
+}
+
+.skill-list li + li {
+    margin-top: 0.35rem;
+}
+
+.project-link {
+    color: var(--text);
+}
+
+.project-link:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.actions-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.08s;
+}
+
+.button:active {
+    transform: translateY(1px);
+}
+
+.button--primary {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
+.button--primary:hover {
+    background: var(--accent-hover);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.button--secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.button--secondary:hover {
+    background: #f8fafc;
+    text-decoration: none;
+}
+
+.stack-text {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.empty-state {
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* Core responsive rules: card layout and split-hero behavior. */
+@media (min-width: 700px) {
+    .card-grid--three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hero--split {
+        grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+    }
+}
+
+/* Project imagery: compact previews for lists and full mockups for detail pages. */
+.project-preview {
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #eef2ff;
+    aspect-ratio: 16 / 9;
+    max-height: 220px;
+}
+
+.project-preview__image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+.project-preview--empty {
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    font-size: 0.875rem;
+    background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(15, 23, 42, 0.04));
+}
+
+.project-hero-image {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    background: var(--surface);
+}
+
+.project-hero-image__img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+}
+
+/* Admin homepage controls rendered directly above content blocks. */
+.admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.admin-toolbar__label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Shared admin form system used across profile, contacts, skills and projects. */
+.admin-form-layout {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.admin-form-card {
+    width: 100%;
+    max-width: none;
+    padding: 1.75rem;
+}
+
+.admin-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.admin-form__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.admin-form__field {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.admin-form__field--full {
+    grid-column: 1 / -1;
+}
+
+.admin-form__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.admin-form__input,
+.admin-form__textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fcfdff;
+    color: var(--text);
+    font: inherit;
+    line-height: 1.5;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03);
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.admin-form__input:hover,
+.admin-form__textarea:hover {
+    background: #ffffff;
+}
+
+.admin-form__input:focus,
+.admin-form__textarea:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: rgba(37, 99, 235, 0.45);
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.12),
+        inset 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.admin-form__textarea {
+    width: 100%;
+    min-height: 320px;
+    resize: vertical;
+}
+
+.admin-note {
+    max-width: 320px;
+}
+
+.admin-note .info-card__text + .info-card__text {
+    margin-top: 0.75rem;
+}
+
+/* Wide-screen admin layout: main form + helper note sidebar. */
+@media (min-width: 900px) {
+    .admin-form-layout {
+        grid-template-columns: minmax(0, 1fr) 320px;
+    }
+
+    .admin-form__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Inline row controls for nested admin items, e.g. skills inside a category. */
+.admin-inline-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--border);
+}
+
+.admin-inline-item:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.admin-inline-item:last-child {
+    padding-bottom: 0;
+}
+
+.admin-inline-item .actions-row {
+    margin-top: 0;
+}
+
+/* Checkbox and validation message styles for admin forms. */
+.admin-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 48px;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fcfdff;
+    color: var(--text);
+}
+
+.admin-checkbox input {
+    margin: 0;
+}
+
+.admin-form-error {
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(220, 38, 38, 0.18);
+    border-radius: 12px;
+    background: rgba(220, 38, 38, 0.06);
+    color: #b42318;
+    font-size: 0.95rem;
+}
+
+.profile-photo--small {
+    width: min(100%, 220px);
+    margin-top: 0.75rem;
+}

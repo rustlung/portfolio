@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты | Админка{% endblock %}
+
+{% block content %}
+    <!-- List view for all contact records managed from the admin area. -->
+    <section class="page-section hero">
+        <h1 class="hero__title">Контакты</h1>
+        <p class="hero__lead">Управление контактами, которые отображаются на главной странице.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="actions-row">
+            <a class="button button--primary" href="/admin/contacts/create">Добавить контакт</a>
+            <a class="button button--secondary" href="/admin">Назад</a>
+        </div>
+    </section>
+
+    <section class="page-section">
+        {% if contacts %}
+            <!-- Every contact card exposes the raw fields that feed the public contact block. -->
+            <div class="card-grid">
+                {% for contact in contacts %}
+                    <article class="info-card">
+                        <h2 class="info-card__title">{{ contact.label }}</h2>
+                        <p class="stack-text"><strong>Тип:</strong> {{ contact.type }}</p>
+                        <p class="stack-text"><strong>Значение:</strong> {{ contact.value }}</p>
+                        <p class="stack-text"><strong>URL:</strong> {{ contact.url }}</p>
+                        <p class="stack-text"><strong>Порядок:</strong> {{ contact.sort_order }}</p>
+
+                        <div class="actions-row">
+                            <a class="button button--secondary" href="/admin/contacts/{{ contact.id }}/edit">Редактировать</a>
+                            <a class="button button--secondary" href="/admin/contacts/{{ contact.id }}/delete">Удалить</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p class="info-card__text">Контакты пока не добавлены.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

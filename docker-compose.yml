@@ -1,0 +1,22 @@
+services:
+  portfolio-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio_web
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    command: >
+      sh -c "python -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    volumes:
+      - ./data:/srv/portfolio/data
+      - ./uploads:/srv/portfolio/app/static/uploads
+    networks:
+      - infra_internal
+
+networks:
+  infra_internal:
+    external: true

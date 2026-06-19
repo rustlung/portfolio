@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление контакта{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">Удаление контакта</h1>
+        <p class="hero__lead">Подтверди удаление записи.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="info-card admin-form-card">
+            <h2 class="info-card__title">{{ contact.label }}</h2>
+            <p class="stack-text"><strong>Тип:</strong> {{ contact.type }}</p>
+            <p class="stack-text"><strong>Значение:</strong> {{ contact.value }}</p>
+            <p class="stack-text"><strong>URL:</strong> {{ contact.url }}</p>
+
+            <p class="info-card__text" style="margin-top: 1rem;">
+                Это действие удалит контакт из базы данных и с главной страницы сайта.
+            </p>
+
+            <form method="post" action="/admin/contacts/{{ contact.id }}/delete">
+                <div class="actions-row">
+                    <button class="button button--primary" type="submit">Удалить</button>
+                    <a class="button button--secondary" href="/admin/contacts">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

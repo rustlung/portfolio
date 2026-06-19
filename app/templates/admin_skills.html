@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Навыки | Админка{% endblock %}
+
+{% block content %}
+    <!-- Skills admin screen combines categories and nested skills to keep hierarchy visible. -->
+    <section class="page-section hero">
+        <h1 class="hero__title">Навыки</h1>
+        <p class="hero__lead">Управление категориями навыков и списками технологий.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="actions-row">
+            <a class="button button--primary" href="/admin/skills/categories/create">Добавить категорию</a>
+            <a class="button button--secondary" href="/admin">Назад</a>
+        </div>
+    </section>
+
+    <section class="page-section">
+        {% if skill_categories %}
+            <!-- Each category card acts as both a preview and a local control center. -->
+            <div class="card-grid">
+                {% for category in skill_categories %}
+                    <article class="info-card">
+                        <h2 class="info-card__title">{{ category.name }}</h2>
+                        <p class="stack-text"><strong>Порядок:</strong> {{ category.sort_order }}</p>
+
+                        {% if category.skills %}
+                            <div style="margin-top: 1rem;">
+                                {% for skill in category.skills | sort(attribute="sort_order") %}
+                                    <div class="admin-inline-item">
+                                        <span>{{ skill.name }}</span>
+
+                                        <div class="actions-row">
+                                            <a class="button button--secondary" href="/admin/skills/items/{{ skill.id }}/edit">Редактировать</a>
+                                            <a class="button button--secondary" href="/admin/skills/items/{{ skill.id }}/delete">Удалить</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>                            
+                        {% else %}
+                            <p class="info-card__text" style="margin-top: 1rem;">Навыков пока нет.</p>
+                        {% endif %}
+
+                        <div class="actions-row">
+                            <a class="button button--primary" href="/admin/skills/{{ category.id }}/items/create">Добавить навык</a>
+                            <a class="button button--secondary" href="/admin/skills/categories/{{ category.id }}/edit">Редактировать категорию</a>
+                            <a class="button button--secondary" href="/admin/skills/categories/{{ category.id }}/delete">Удалить категорию</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p class="info-card__text">Категории навыков пока не добавлены.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

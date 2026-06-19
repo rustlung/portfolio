@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+    <!-- This form is shared by both project creation and project editing routes. -->
+    <div class="actions-row">
+        <a class="button button--secondary" href="/admin/projects">Назад к проектам</a>
+    </div>
+
+    <section class="page-section hero">
+        <h1 class="hero__title">{{ form_title }}</h1>
+        <p class="hero__lead">Заполни карточку проекта для отображения на сайте.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="admin-form-layout">
+            <div class="info-card admin-form-card">
+                <form class="admin-form" method="post" action="{{ form_action }}" enctype="multipart/form-data">
+                    {% if error %}
+                        <!-- Validation and business-rule errors are shown inline to preserve entered data. -->
+                        <div class="admin-form-error">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    <!-- First group contains compact meta fields and routing-related values. -->
+                    <div class="admin-form__grid">
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="title">Название проекта</label>
+                            <input
+                                class="admin-form__input"
+                                id="title"
+                                name="title"
+                                type="text"
+                                value="{{ project.title if project else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="slug">Slug</label>
+                            <input
+                                class="admin-form__input"
+                                id="slug"
+                                name="slug"
+                                type="text"
+                                value="{{ project.slug if project else '' }}"
+                                placeholder="documind"
+                                required
+                            >
+                        </div>
+
+                        <!-- Technologies and image path are stored as plain strings in the current MVP. -->
+                        <div class="admin-form__field admin-form__field--full">
+                            <label class="admin-form__label" for="short_description">Краткое описание</label>
+                            <input
+                                class="admin-form__input"
+                                id="short_description"
+                                name="short_description"
+                                type="text"
+                                value="{{ project.short_description if project else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="sort_order">Порядок</label>
+                            <input
+                                class="admin-form__input"
+                                id="sort_order"
+                                name="sort_order"
+                                type="number"
+                                value="{{ project.sort_order if project else 0 }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="is_featured">Избранный проект</label>
+                            <label class="admin-checkbox">
+                                <input
+                                    id="is_featured"
+                                    name="is_featured"
+                                    type="checkbox"
+                                    value="true"
+                                    {% if project and project.is_featured %}checked{% endif %}
+                                >
+                                <span>Показывать на главной странице</span>
+                            </label>
+                        </div>
+
+                        <div class="admin-form__field admin-form__field--full">
+                            <label class="admin-form__label" for="technologies">Технологии</label>
+                            <input
+                                class="admin-form__input"
+                                id="technologies"
+                                name="technologies"
+                                type="text"
+                                value="{{ project.technologies if project else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field admin-form__field--full">
+                            <label class="admin-form__label" for="image">Изображение проекта</label>
+                            <input
+                                class="admin-form__input"
+                                id="image"
+                                name="image"
+                                type="file"
+                                accept=".png,.jpg,.jpeg,.webp"
+                            >
+
+                            {% if project and project.image_path %}
+                                <p class="stack-text"><strong>Текущее изображение:</strong></p>
+                                <div class="project-preview" style="margin-top: 0.75rem;">
+                                    <img class="project-preview__image" src="{{ project.image_path }}" alt="{{ project.title }}">
+                                </div>
+                            {% endif %}
+                        </div>                        
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="github_url">GitHub URL</label>
+                            <input
+                                class="admin-form__input"
+                                id="github_url"
+                                name="github_url"
+                                type="text"
+                                value="{{ project.github_url if project else '' }}"
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="demo_url">Demo URL</label>
+                            <input
+                                class="admin-form__input"
+                                id="demo_url"
+                                name="demo_url"
+                                type="text"
+                                value="{{ project.demo_url if project else '' }}"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Long-form fields map directly to sections on the public project detail page. -->
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="full_description">О проекте</label>
+                        <textarea
+                            class="admin-form__textarea"
+                            id="full_description"
+                            name="full_description"
+                            rows="6"
+                            required
+                        >{{ project.full_description if project else '' }}</textarea>
+                    </div>
+
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="problem">Какую задачу решает</label>
+                        <textarea
+                            class="admin-form__textarea"
+                            id="problem"
+                            name="problem"
+                            rows="5"
+                            required
+                        >{{ project.problem if project else '' }}</textarea>
+                    </div>
+
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="features">Что реализовано</label>
+                        <textarea
+                            class="admin-form__textarea"
+                            id="features"
+                            name="features"
+                            rows="6"
+                            required
+                        >{{ project.features if project else '' }}</textarea>
+                    </div>
+
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="result">Результат</label>
+                        <textarea
+                            class="admin-form__textarea"
+                            id="result"
+                            name="result"
+                            rows="4"
+                            required
+                        >{{ project.result if project else '' }}</textarea>
+                    </div>
+
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="practical_use">Практическое применение</label>
+                        <textarea
+                            class="admin-form__textarea"
+                            id="practical_use"
+                            name="practical_use"
+                            rows="4"
+                            required
+                        >{{ project.practical_use if project else '' }}</textarea>
+                    </div>
+
+                    <div class="actions-row">
+                        <button class="button button--primary" type="submit">{{ submit_label }}</button>
+                        <a class="button button--secondary" href="/admin/projects">Отмена</a>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="info-card admin-note">
+                <h2 class="info-card__title">Подсказка</h2>
+                <p class="info-card__text">
+                    `slug` должен быть уникальным и использоваться в URL проекта.
+                </p>
+                <p class="info-card__text">
+                    Если проект отмечен как избранный, он попадет на главную страницу.
+                </p>
+                <p class="info-card__text">
+                    Изображение проекта можно загрузить прямо из формы. После загрузки путь сохранится автоматически.
+                </p>
+            </aside>
+        </div>
+    </section>
+{% endblock %}

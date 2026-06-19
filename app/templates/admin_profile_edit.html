@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование профиля{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">Редактирование профиля</h1>
+        <p class="hero__lead">Изменение hero-блока и раздела "О себе".</p>
+    </section>
+
+    <section class="page-section">
+        <div class="admin-form-layout">
+            <div class="info-card admin-form-card">
+                <form class="admin-form" method="post" action="/admin/profile/edit" enctype="multipart/form-data">
+                    <div class="admin-form__grid">
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="full_name">ФИО</label>
+                            <input
+                                class="admin-form__input"
+                                id="full_name"
+                                name="full_name"
+                                type="text"
+                                value="{{ profile.full_name if profile else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field">
+                            <label class="admin-form__label" for="title">Должность</label>
+                            <input
+                                class="admin-form__input"
+                                id="title"
+                                name="title"
+                                type="text"
+                                value="{{ profile.title if profile else '' }}"
+                                required
+                            >
+                        </div>
+
+                        <div class="admin-form__field admin-form__field--full">
+                            <label class="admin-form__label" for="subtitle">Подзаголовок</label>
+                            <input
+                                class="admin-form__input"
+                                id="subtitle"
+                                name="subtitle"
+                                type="text"
+                                value="{{ profile.subtitle if profile else '' }}"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="photo">Фото профиля</label>
+                        <input
+                            class="admin-form__input"
+                            id="photo"
+                            name="photo"
+                            type="file"
+                            accept=".png,.jpg,.jpeg,.webp"
+                        >
+
+                        {% if profile and profile.photo_path %}
+                            <p class="stack-text"><strong>Текущее фото:</strong></p>
+                            <div class="profile-photo profile-photo--small">
+                                <img class="profile-photo__image" src="{{ profile.photo_path }}" alt="{{ profile.full_name }}">
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="admin-form__field admin-form__field--full">
+                        <label class="admin-form__label" for="about_text">О себе</label>
+                        <textarea
+                            class="admin-form__textarea"
+                            id="about_text"
+                            name="about_text"
+                            rows="12"
+                            required
+                        >{{ profile.about_text if profile else '' }}</textarea>
+                    </div>
+
+                    <div class="actions-row">
+                        <button class="button button--primary" type="submit">Сохранить</button>
+                        <a class="button button--secondary" href="/admin">Отмена</a>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="info-card admin-note">
+                <h2 class="info-card__title">Что редактируется</h2>
+                <p class="info-card__text">
+                    Эта форма управляет hero-блоком и секцией «О себе» на главной странице.
+                </p>
+                <p class="info-card__text">
+                    Фото пока редактируется отдельно через `photo_path` в базе, позже можно будет
+                    добавить загрузку через админку.
+                </p>
+            </aside>
+        </div>
+    </section>
+{% endblock %}

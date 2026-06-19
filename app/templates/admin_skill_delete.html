@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление навыка{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">Удаление навыка</h1>
+        <p class="hero__lead">Подтверди удаление навыка из категории.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="info-card admin-form-card">
+            <h2 class="info-card__title">{{ skill.name }}</h2>
+
+            {% if category %}
+                <p class="stack-text"><strong>Категория:</strong> {{ category.name }}</p>
+            {% endif %}
+
+            <p class="stack-text"><strong>Порядок:</strong> {{ skill.sort_order }}</p>
+
+            <p class="info-card__text" style="margin-top: 1rem;">
+                Это действие удалит навык из базы данных и из блока навыков на сайте.
+            </p>
+
+            <form method="post" action="/admin/skills/items/{{ skill.id }}/delete">
+                <div class="actions-row">
+                    <button class="button button--primary" type="submit">Удалить</button>
+                    <a class="button button--secondary" href="/admin/skills">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

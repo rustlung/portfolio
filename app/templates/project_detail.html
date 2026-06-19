@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - Portfolio{% endblock %}
+
+{% block content %}
+    <article class="page-section">
+        <!-- Quick return to the catalogue page; useful after exploring multiple cases. -->
+        <div class="actions-row">
+            <a class="button button--secondary" href="/projects">Назад к проектам</a>
+        </div>       
+
+        <!-- Project hero: title + short positioning statement. -->
+        <section class="hero">
+            <h1 class="hero__title">{{ project.title }}</h1>
+            <p class="hero__lead">{{ project.short_description }}</p>
+        </section>
+
+        {% if project.image_path %}
+            <!-- Large mockup is shown separately from list previews to preserve detail. -->
+            <section class="page-section">
+                <div class="project-hero-image">
+                    <img class="project-hero-image__img" src="{{ project.image_path }}" alt="{{ project.title }}">
+                </div>
+            </section>
+        {% endif %}        
+
+        <!-- The next sections mirror the structured fields stored in the Project model. -->
+        <section class="page-section">
+            <h2 class="section-title">О проекте</h2>
+            <div class="info-card">
+                <p class="info-card__text">{{ project.full_description }}</p>
+            </div>
+        </section>
+
+        <section class="page-section">      
+            <h2 class="section-title">Какую задачу решает</h2>
+            <div class="info-card">
+                <p class="info-card__text">{{ project.problem }}</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <h2 class="section-title">Что реализовано</h2>
+            <div class="info-card">
+                <p class="info-card__text">{{ project.features }}</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <h2 class="section-title">Результат</h2>
+            <div class="info-card">
+                <p class="info-card__text">{{ project.result }}</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <h2 class="section-title">Практическое применение</h2>
+            <div class="info-card">
+                <p class="info-card__text">{{ project.practical_use }}</p>
+            </div>
+        </section>        
+
+        <section class="page-section">
+            <h2 class="section-title">Технологии</h2>
+            <div class="info-card">
+                <p class="stack-text">{{ project.technologies }}</p>
+            </div>
+        </section>
+
+        <section class="page-section">
+            <h2 class="section-title">Ссылки</h2>
+            <div class="actions-row">
+                <!-- External links are optional, so each button is rendered conditionally. -->
+                {% if project.github_url %}
+                    <a class="button button--primary" href="{{ project.github_url }}">GitHub</a>
+                {% endif %}
+                {% if project.demo_url %}
+                    <a class="button button--secondary" href="{{ project.demo_url }}">Demo</a>
+                {% endif %}
+            </div>
+        </section>
+    </article>
+{% endblock %}

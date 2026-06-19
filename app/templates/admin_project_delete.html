@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление проекта{% endblock %}
+
+{% block content %}
+    <section class="page-section hero">
+        <h1 class="hero__title">Удаление проекта</h1>
+        <p class="hero__lead">Подтверди удаление проекта из портфолио.</p>
+    </section>
+
+    <section class="page-section">
+        <div class="info-card admin-form-card">
+            {% if project.image_path %}
+                <div class="project-preview">
+                    <img class="project-preview__image" src="{{ project.image_path }}" alt="{{ project.title }}">
+                </div>
+            {% endif %}
+
+            <h2 class="info-card__title">{{ project.title }}</h2>
+            <p class="info-card__text">{{ project.short_description }}</p>
+            <p class="stack-text"><strong>Slug:</strong> {{ project.slug }}</p>
+            <p class="stack-text"><strong>Избранный:</strong> {{ "Да" if project.is_featured else "Нет" }}</p>
+
+            <p class="info-card__text" style="margin-top: 1rem;">
+                Это действие удалит проект из базы данных, со страницы проектов и, если он избранный, с главной страницы.
+            </p>
+
+            <form method="post" action="/admin/projects/{{ project.id }}/delete">
+                <div class="actions-row">
+                    <button class="button button--primary" type="submit">Удалить</button>
+                    <a class="button button--secondary" href="/admin/projects">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

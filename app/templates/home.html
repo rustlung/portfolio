@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile.full_name }} - Portfolio{% endblock %}
+
+{% block content %}
+    {% if profile %}
+        <!-- Hero: first screen with identity, role and quick navigation to key destinations. -->
+        <section class="page-section hero hero--split">
+            <div class="hero__content">
+                <h1 class="hero__title">{{ profile.full_name }}</h1>
+                <p class="hero__subtitle">{{ profile.title }}</p>
+                <p class="hero__lead">{{ profile.subtitle }}</p>
+
+                <div class="actions-row">
+                    <a class="button button--primary" href="/projects">Смотреть проекты</a>
+                    <a class="button button--secondary" href="https://vsigaev.ru/documind">Открыть DocuMind</a>
+                </div>
+            </div>
+
+            {% if profile.photo_path %}
+                <div class="hero__media">
+                    <div class="profile-photo">
+                        <img class="profile-photo__image" src="{{ profile.photo_path }}" alt="{{ profile.full_name }}">
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+    <!-- About block: short professional summary taken from Profile.about_text. -->
+    <section class="page-section">
+        <h2 class="section-title">О себе</h2>
+        <div class="info-card">
+            <p class="info-card__text">{{ profile.about_text }}</p>
+        </div>
+    </section>
+
+    <!-- Contact links are kept in a separate list so their order can be managed from admin. -->
+    <section class="page-section">
+        <h2 class="section-title">Контакты</h2>
+        <div class="info-card">
+            <ul class="meta-list">
+                {% for contact in contacts %}
+                    <li>
+                        <strong>{{ contact.label }}:</strong>
+                        <a href="{{ contact.url }}">{{ contact.value }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!-- Skills are grouped by category to mirror the backend-oriented portfolio structure. -->
+    <section class="page-section">
+        <h2 class="section-title">Технические компетенции</h2>
+        <div class="card-grid card-grid--three">
+            {% for category in skill_categories %}
+                <article class="info-card">
+                    <h3 class="info-card__title">{{ category.name }}</h3>
+                    <ul class="skill-list">
+                        {% for skill in category.skills | sort(attribute="sort_order") %}
+                            <li>{{ skill.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Featured projects intentionally show only the curated top-3 entries. -->
+    <section class="page-section">
+        <h2 class="section-title">Избранные проекты</h2>
+        <div class="card-grid card-grid--three">
+            {% for project in featured_projects %}
+                <article class="info-card">
+                    {% if project.image_path %}
+                        <div class="project-preview">
+                            <img class="project-preview__image" src="{{ project.image_path }}" alt="{{ project.title }}">
+                        </div>
+                    {% else %}
+                        <div class="project-preview project-preview--empty">
+                            <span>Preview coming soon</span>
+                        </div>
+                    {% endif %}
+
+                    <h3 class="info-card__title">
+                        <a class="project-link" href="/projects/{{ project.slug }}">{{ project.title }}</a>
+                    </h3>
+
+                    <p class="info-card__text">{{ project.short_description }}</p>
+                    <p class="stack-text"><strong>Технологии:</strong> {{ project.technologies }}</p>
+
+                    <div class="actions-row">
+                        <a class="button button--secondary" href="/projects/{{ project.slug }}">Подробнее</a>
+                        {% if project.github_url %}
+                            <a class="button button--secondary" href="{{ project.github_url }}">GitHub</a>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+
+        <div class="actions-row">
+            <a class="button button--primary" href="/projects">Смотреть все проекты</a>
+        </div>
+    </section>
+    {% else %}
+    <!-- Fallback for a brand-new database before content is created. -->
+    <section class="page-section empty-state">
+        <h1 class="section-title">Профиль пока не заполнен</h1>
+        <p class="info-card__text">Добавь данные в базу, и главная страница начнет отображать контент.</p>
+    </section>
+    {% endif %}
+{% endblock %}
