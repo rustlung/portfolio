@@ -30,7 +30,7 @@
     <section class="page-section">
         <h2 class="section-title">О себе</h2>
         <div class="info-card">
-            <p class="info-card__text">{{ profile.about_text }}</p>
+            <p class="info-card__text formatted-text">{{ profile.about_text }}</p>
         </div>
     </section>
 
@@ -86,8 +86,8 @@
                         <a class="project-link" href="/projects/{{ project.slug }}">{{ project.title }}</a>
                     </h3>
 
-                    <p class="info-card__text">{{ project.short_description }}</p>
-                    <p class="stack-text"><strong>Технологии:</strong> {{ project.technologies }}</p>
+                    <p class="info-card__text formatted-text">{{ project.short_description }}</p>
+                    <p class="stack-text formatted-text"><strong>Технологии:</strong> {{ project.technologies }}</p>
 
                     <div class="actions-row">
                         <a class="button button--secondary" href="/projects/{{ project.slug }}">Подробнее</a>

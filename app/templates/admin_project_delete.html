@@ -17,7 +17,7 @@
             {% endif %}
 
             <h2 class="info-card__title">{{ project.title }}</h2>
-            <p class="info-card__text">{{ project.short_description }}</p>
+            <p class="info-card__text formatted-text">{{ project.short_description }}</p>
             <p class="stack-text"><strong>Slug:</strong> {{ project.slug }}</p>
             <p class="stack-text"><strong>Избранный:</strong> {{ "Да" if project.is_featured else "Нет" }}</p>
 

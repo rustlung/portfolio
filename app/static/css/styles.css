@@ -211,6 +211,11 @@ a:hover {
     font-size: 0.95rem;
 }
 
+/* Use for user-authored long text where line breaks and indentation matter. */
+.formatted-text {
+    white-space: pre-wrap;
+}
+
 .meta-list {
     display: grid;
     gap: 0.75rem;
