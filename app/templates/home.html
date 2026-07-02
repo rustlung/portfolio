@@ -34,21 +34,6 @@
         </div>
     </section>
 
-    <!-- Contact links are kept in a separate list so their order can be managed from admin. -->
-    <section class="page-section">
-        <h2 class="section-title">Контакты</h2>
-        <div class="info-card">
-            <ul class="meta-list">
-                {% for contact in contacts %}
-                    <li>
-                        <strong>{{ contact.label }}:</strong>
-                        <a href="{{ contact.url }}">{{ contact.value }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </section>
-
     <!-- Skills are grouped by category to mirror the backend-oriented portfolio structure. -->
     <section class="page-section">
         <h2 class="section-title">Технические компетенции</h2>
@@ -103,6 +88,22 @@
             <a class="button button--primary" href="/projects">Смотреть все проекты</a>
         </div>
     </section>
+
+    <!-- Contact links are kept in a separate list so their order can be managed from admin. -->
+    <section class="page-section">
+        <h2 class="section-title">Контакты</h2>
+        <div class="info-card">
+            <ul class="meta-list">
+                {% for contact in contacts %}
+                    <li>
+                        <strong>{{ contact.label }}:</strong>
+                        <a href="{{ contact.url }}">{{ contact.value }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    
     {% else %}
     <!-- Fallback for a brand-new database before content is created. -->
     <section class="page-section empty-state">
