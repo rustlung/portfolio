@@ -2,6 +2,7 @@
 .env.*
 DEPLOY.md
 /docs
+PROJECT_CONTEXT.md
 
 # Python cache
 __pycache__/
