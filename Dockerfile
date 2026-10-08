@@ -13,5 +13,6 @@ COPY . .
 RUN mkdir -p /srv/portfolio/data
 RUN mkdir -p /srv/portfolio/app/static/uploads/profile
 RUN mkdir -p /srv/portfolio/app/static/uploads/projects
+RUN mkdir -p /srv/portfolio/app/static/uploads/project_screenshots
 
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -22,6 +22,7 @@ from app.routers.admin_profile import router as admin_profile_router
 from app.routers.admin_contacts import router as admin_contacts_router
 from app.routers.admin_skills import router as admin_skills_router
 from app.routers.admin_projects import router as admin_projects_router
+from app.routers.admin_project_screenshots import router as admin_project_screenshots_router
 
 from app.seed import seed_database
 
@@ -53,6 +54,7 @@ app.include_router(admin_profile_router)
 app.include_router(admin_contacts_router)
 app.include_router(admin_skills_router)
 app.include_router(admin_projects_router)
+app.include_router(admin_project_screenshots_router)
 
 # Static files contain the site CSS and image assets used by templates.
 app.mount("/static", StaticFiles(directory="app/static"), name="static")

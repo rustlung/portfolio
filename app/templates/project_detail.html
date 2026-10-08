@@ -24,6 +24,52 @@
             </section>
         {% endif %}        
 
+        {% if screenshots %}
+            <section class="page-section project-gallery" data-project-gallery>
+                <div class="project-gallery__heading">
+                    <h2 class="section-title">Скриншоты проекта</h2>
+                    <div class="project-gallery__controls" aria-label="Прокрутка галереи">
+                        <button class="project-gallery__arrow" type="button" data-gallery-previous aria-label="Предыдущие скриншоты">←</button>
+                        <button class="project-gallery__arrow" type="button" data-gallery-next aria-label="Следующие скриншоты">→</button>
+                    </div>
+                </div>
+
+                <div class="project-gallery__track" data-gallery-track tabindex="0" aria-label="Скриншоты проекта {{ project.title }}">
+                    {% for screenshot in screenshots %}
+                        <figure class="project-gallery__item">
+                            <button
+                                class="project-gallery__thumbnail"
+                                type="button"
+                                data-gallery-item
+                                aria-label="Открыть скриншот {{ loop.index }}"
+                            >
+                                <img
+                                    class="project-gallery__image"
+                                    src="{{ screenshot.image_path }}"
+                                    alt="{{ screenshot.caption or ('Скриншот проекта ' ~ project.title) }}"
+                                    loading="lazy"
+                                    draggable="false"
+                                >
+                            </button>
+                            {% if screenshot.caption %}
+                                <figcaption class="project-gallery__caption">{{ screenshot.caption }}</figcaption>
+                            {% endif %}
+                        </figure>
+                    {% endfor %}
+                </div>
+
+                <div class="project-lightbox" data-gallery-lightbox hidden role="dialog" aria-modal="true" aria-label="Полноразмерный просмотр скриншотов">
+                    <button class="project-lightbox__close" type="button" data-lightbox-close aria-label="Закрыть">×</button>
+                    <button class="project-lightbox__arrow project-lightbox__arrow--previous" type="button" data-lightbox-previous aria-label="Предыдущий скриншот">←</button>
+                    <figure class="project-lightbox__figure">
+                        <img class="project-lightbox__image" data-lightbox-image src="" alt="">
+                        <figcaption class="project-lightbox__caption" data-lightbox-caption></figcaption>
+                    </figure>
+                    <button class="project-lightbox__arrow project-lightbox__arrow--next" type="button" data-lightbox-next aria-label="Следующий скриншот">→</button>
+                </div>
+            </section>
+        {% endif %}
+
         <!-- The next sections mirror the structured fields stored in the Project model. -->
         <section class="page-section">
             <h2 class="section-title">О проекте</h2>
@@ -80,4 +126,8 @@
             </div>
         </section>
     </article>
+
+    {% if screenshots %}
+        <script src="{{ url_for('static', path='js/project_gallery.js') }}" defer></script>
+    {% endif %}
 {% endblock %}

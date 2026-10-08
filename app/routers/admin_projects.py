@@ -4,13 +4,14 @@ from fastapi import APIRouter, Depends, Form, Request, UploadFile, File
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import func, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from pathlib import Path
 from uuid import uuid4
 
 from app.database import get_db
 from app.dependencies import require_admin
 from app.models import Project
+from app.services import project_screenshots as screenshot_storage
 
 router = APIRouter(prefix="/admin", tags=["admin-projects"])
 templates = Jinja2Templates(directory="app/templates")
@@ -321,13 +322,19 @@ def admin_delete_project(
         return admin_check
 
     project = db.execute(
-        select(Project).where(Project.id == project_id)
+        select(Project)
+        .options(selectinload(Project.screenshots))
+        .where(Project.id == project_id)
     ).scalars().first()
 
     if project is None:
         return RedirectResponse(url="/admin/projects", status_code=303)
 
+    screenshot_paths = [screenshot.image_path for screenshot in project.screenshots]
     db.delete(project)
     db.commit()
+
+    for image_path in screenshot_paths:
+        screenshot_storage.delete_screenshot_file(image_path)
 
     return RedirectResponse(url="/admin/projects", status_code=303)

@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session, selectinload
 
 from app.services.site_content import get_homepage_content
 from app.database import get_db
-from app.models import Profile, Project, SkillCategory
+from app.models import Profile, Project, ProjectScreenshot, SkillCategory
 
 
 router = APIRouter()
@@ -55,10 +55,17 @@ def read_project_detail(
     if project is None:
         raise HTTPException(status_code=404, detail="Project not found")
 
+    screenshots = db.execute(
+        select(ProjectScreenshot)
+        .where(ProjectScreenshot.project_id == project.id)
+        .order_by(ProjectScreenshot.sort_order, ProjectScreenshot.id)
+    ).scalars().all()
+
     return templates.TemplateResponse(
         request=request,
         name="project_detail.html",
         context={
             "project": project,
+            "screenshots": screenshots,
         },
     )

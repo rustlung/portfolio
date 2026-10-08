@@ -22,7 +22,7 @@
             <p class="stack-text"><strong>Избранный:</strong> {{ "Да" if project.is_featured else "Нет" }}</p>
 
             <p class="info-card__text" style="margin-top: 1rem;">
-                Это действие удалит проект из базы данных, со страницы проектов и, если он избранный, с главной страницы.
+                Это действие удалит проект, все записи его галереи и файлы скриншотов. Другие проекты затронуты не будут.
             </p>
 
             <form method="post" action="/admin/projects/{{ project.id }}/delete">

@@ -3,6 +3,7 @@
 DEPLOY.md
 /docs
 PROJECT_CONTEXT.md
+/data/
 
 # Python cache
 __pycache__/
@@ -13,6 +14,11 @@ __pycache__/
 # Local database and generated files
 portfolio.db
 *.sqlite3
+*.sqlite
+
+# User uploads created by the local app and Docker bind mount
+/app/static/uploads/
+/uploads/
 
 # Virtual environments
 .venv/

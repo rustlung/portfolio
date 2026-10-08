@@ -6,6 +6,9 @@
     <!-- This form is shared by both project creation and project editing routes. -->
     <div class="actions-row">
         <a class="button button--secondary" href="/admin/projects">Назад к проектам</a>
+        {% if project and project.id %}
+            <a class="button button--secondary" href="/admin/projects/{{ project.id }}/screenshots">Управлять скриншотами</a>
+        {% endif %}
     </div>
 
     <section class="page-section hero">

@@ -1,7 +1,7 @@
 """Database engine, declarative base and request-scoped session helpers."""
 
 from _collections_abc import Generator
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, Session
 
 from app.config import settings
@@ -17,6 +17,16 @@ engine = create_engine(
     settings.database_url,
     connect_args={"check_same_thread": False},
 )
+
+
+if engine.dialect.name == "sqlite":
+    @event.listens_for(engine, "connect")
+    def enable_sqlite_foreign_keys(dbapi_connection, connection_record) -> None:
+        """Make database-level ON DELETE CASCADE effective for SQLite."""
+
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 
 # SessionLocal is used to open short-lived DB sessions inside request handlers.
 SessionLocal = sessionmaker(

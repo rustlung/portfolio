@@ -363,6 +363,203 @@ a:hover {
     border-radius: 10px;
 }
 
+/* Horizontal project gallery and lightweight fullscreen viewer. */
+.project-gallery__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.project-gallery__heading .section-title {
+    margin-bottom: 0;
+}
+
+.project-gallery__controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.project-gallery__arrow,
+.project-lightbox__close,
+.project-lightbox__arrow {
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+.project-gallery__arrow {
+    width: 42px;
+    height: 42px;
+}
+
+.project-gallery__arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.project-gallery__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.1rem 0 0.75rem;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-color: rgba(100, 116, 139, 0.45) transparent;
+    cursor: grab;
+}
+
+.project-gallery__track--dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+    user-select: none;
+}
+
+.project-gallery__item {
+    min-width: 0;
+    margin: 0;
+    scroll-snap-align: start;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.project-gallery__thumbnail {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: #eef2ff;
+    aspect-ratio: 16 / 10;
+    cursor: zoom-in;
+}
+
+.project-gallery__thumbnail:focus-visible,
+.project-gallery__arrow:focus-visible,
+.project-lightbox button:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.35);
+    outline-offset: 2px;
+}
+
+.project-gallery__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.project-gallery__caption {
+    padding: 0.85rem 1rem 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.lightbox-open {
+    overflow: hidden;
+}
+
+.project-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 4rem;
+    background: rgba(15, 23, 42, 0.88);
+}
+
+.project-lightbox[hidden] {
+    display: none;
+}
+
+.project-lightbox__figure {
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    max-width: 100%;
+    margin: 0;
+}
+
+.project-lightbox__image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: calc(100vw - 8rem);
+    max-height: calc(100vh - 10rem);
+    border-radius: var(--radius-sm);
+    object-fit: contain;
+}
+
+.project-lightbox__caption {
+    max-width: 48rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.project-lightbox__close,
+.project-lightbox__arrow {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 1.5rem;
+}
+
+.project-lightbox__close {
+    top: 1rem;
+    right: 1rem;
+}
+
+.project-lightbox__arrow--previous {
+    left: 1rem;
+}
+
+.project-lightbox__arrow--next {
+    right: 1rem;
+}
+
+@media (min-width: 600px) {
+    .project-gallery__track {
+        grid-auto-columns: calc((100% - 1rem) / 2);
+    }
+}
+
+@media (min-width: 900px) {
+    .project-gallery__track {
+        grid-auto-columns: calc((100% - 2rem) / 3);
+    }
+}
+
+@media (max-width: 599px) {
+    .project-lightbox {
+        padding: 3.5rem 1rem 5rem;
+    }
+
+    .project-lightbox__image {
+        max-width: calc(100vw - 2rem);
+        max-height: calc(100vh - 9rem);
+    }
+
+    .project-lightbox__arrow {
+        bottom: 1rem;
+        top: auto;
+    }
+}
+
 /* Admin homepage controls rendered directly above content blocks. */
 .admin-toolbar {
     display: flex;
@@ -528,4 +725,32 @@ a:hover {
 .profile-photo--small {
     width: min(100%, 220px);
     margin-top: 0.75rem;
+}
+
+/* Screenshot manager keeps image editing compact without changing shared forms. */
+.admin-screenshot-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.admin-screenshot-card {
+    display: grid;
+    gap: 1rem;
+    align-items: start;
+}
+
+.admin-screenshot-card__image {
+    display: block;
+    width: 100%;
+    max-height: 260px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #eef2ff;
+    object-fit: contain;
+}
+
+@media (min-width: 800px) {
+    .admin-screenshot-card {
+        grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr) auto;
+    }
 }
